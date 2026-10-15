@@ -4,10 +4,13 @@ import { useState } from "react";
 import Sidebar from "../components/Layout/Sidebar";
 import DashboardHeader from "../components/Layout/DashboardHeader";
 import { Info, ArrowUp } from "lucide-react";
-import RevenueChart from "@/components/dashboard/RevenueChart";
+import RevenueChart from "../components/dashboard/RevenueChart";
+import MetricCard from "../components/dashboard/MatricCard";
+import { dashboardMetrics } from "@/data/dashboardMetrics";
 import Link from "next/link";
 import Image from "next/image";
 import User from "../public/user.jpg";
+import ActiveCustomers from "@/components/dashboard/ActiveCustomers";
 
 export default function DashboardPage() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -35,9 +38,9 @@ export default function DashboardPage() {
           <div className="revenue-status">
             <div className="revenue-generated">
               <div className="revenue-box-head">
-                <span className="rev-title">
+                <h3 className="rev-title">
                   Monthly Revenue <Info size={18} color="#D3D3D3" />
-                </span>
+                </h3>
                 <div className="revenue-infigure">
                   120,000 <span>AED</span>
                 </div>
@@ -53,82 +56,18 @@ export default function DashboardPage() {
                 <RevenueChart />
               </div>
             </div>
-            <div className="active-users">
-              <div className="Users-list">
-                <div className="section-head">
-                  <h3>Active Customer</h3>
-                  <Link href="/customers">view all</Link>
-                </div>
-                <div className="user-detail">
-                  <div className="profile-img">
-                    <Image
-                      src={User}
-                      alt="User profile"
-                      width={50}
-                      height={50}
-                      className="profile-image"
-                      sizes="50px"
-                      priority={false}
-                    />
-                    <span>Acme Inc.</span>
-                  </div>
-                  <div className="profit-amt">
-                    $2.00/ <span>mo</span>
-                  </div>
-                </div>
-                <div className="user-detail">
-                  <div className="profile-img">
-                    <Image
-                      src={User}
-                      alt="User profile"
-                      width={50}
-                      height={50}
-                      className="profile-image"
-                      sizes="50px"
-                      priority={false}
-                    />
-                    <span>Acme Inc.</span>
-                  </div>
-                  <div className="profit-amt">
-                    $2.00/ <span>mo</span>
-                  </div>
-                </div>
-                <div className="user-detail">
-                  <div className="profile-img">
-                    <Image
-                      src={User}
-                      alt="User profile"
-                      width={50}
-                      height={50}
-                      className="profile-image"
-                      sizes="50px"
-                      priority={false}
-                    />
-                    <span>Acme Inc.</span>
-                  </div>
-                  <div className="profit-amt">
-                    $2.00/ <span>mo</span>
-                  </div>
-                </div>
-                <div className="user-detail">
-                  <div className="profile-img">
-                    <Image
-                      src={User}
-                      alt="User profile"
-                      width={50}
-                      height={50}
-                      className="profile-image"
-                      sizes="50px"
-                      priority={false}
-                    />
-                    <span>Acme Inc.</span>
-                  </div>
-                  <div className="profit-amt">
-                    $2.00/ <span>mo</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ActiveCustomers />
+          </div>
+          <div className="dashboard-metrics">
+            {dashboardMetrics.map((metric) => (
+              <MetricCard
+                key={metric.id}
+                title={metric.title}
+                amount={metric.amount}
+                change={metric.change}
+                comparisonText={metric.comparisonText}
+              />
+            ))}
           </div>
         </div>
       </main>

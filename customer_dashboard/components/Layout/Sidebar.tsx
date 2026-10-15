@@ -13,7 +13,7 @@ import {
   X,
 } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
-import { Button } from "../Button";
+import { Button } from "../ui/Button";
 import Link from "next/link";
 
 interface SidebarProps {

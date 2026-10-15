@@ -1,6 +1,6 @@
 import { Bell, ChevronDown, Search, Menu, X } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
-import { Button } from "../Button";
+import { Button } from "../ui/Button";
 
 interface DashboardHeaderProps {
   mobileOpen: boolean;
@@ -29,21 +29,16 @@ export default function DashboardHeader({
           <X size={20} color="#635bff" />
         )}
       </Button>
-      <div className="header-search">
+      {/* <div className="header-search">
         <Search size={18} />
         <input
           type="search"
           aria-label="Search dashboard"
           placeholder="Search anything..."
         />
-      </div>
+      </div> */}
 
       <div className="header-actions">
-        {/* <div className="header-date">
-          <Sparkles size={16} />
-          <span>Customer insights</span>
-        </div> */}
-
         <Button
           variant="secondary"
           className="icon-button notification-button"

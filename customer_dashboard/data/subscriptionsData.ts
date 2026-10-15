@@ -1,0 +1,43 @@
+import type { Subscription } from "../types/subscription";
+
+export const subscriptionsData: Subscription[] = [
+  {
+    id: "SUB-001",
+    customerId: "CUS-001",
+    plan: "Enterprise",
+    status: "Active",
+    billingCycle: "Yearly",
+    price: 12400,
+    currency: "USD",
+    startDate: "2026-01-15",
+    nextBillingDate: "2027-01-15",
+    paymentMethod: "Visa ending in 4242",
+    autoRenew: true,
+  },
+  {
+    id: "SUB-002",
+    customerId: "CUS-002",
+    plan: "Pro",
+    status: "Active",
+    billingCycle: "Monthly",
+    price: 49,
+    currency: "USD",
+    startDate: "2026-09-01",
+    nextBillingDate: "2026-11-01",
+    paymentMethod: "Mastercard ending in 5555",
+    autoRenew: true,
+  },
+  {
+    id: "SUB-003",
+    customerId: "CUS-003",
+    plan: "Basic",
+    status: "Cancelled",
+    billingCycle: "Monthly",
+    price: 9,
+    currency: "USD",
+    startDate: "2026-03-10",
+    nextBillingDate: null,
+    paymentMethod: "Visa ending in 1234",
+    autoRenew: false,
+  },
+];

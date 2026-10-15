@@ -1,7 +1,7 @@
 import React from "react";
 
 type ButtonProps = {
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "back";
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
@@ -17,6 +17,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
+      type="button"
       className={`button button--${variant} ${className}`.trim()}
       onClick={onClick}
       aria-label={ariaLabel}
