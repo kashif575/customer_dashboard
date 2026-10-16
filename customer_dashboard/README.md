@@ -13,24 +13,100 @@ pnpm dev
 # or
 bun dev
 ```
+## Set up
+
+# Open your terminal in VS Code and run:
+    npx create-next-app@latest nextjs-practice
+
+# Then start the development server:
+    cd nextjs-practice
+    npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Architecture
 
-## Learn More
+customer-analytics/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   │── customers/
+│   │   ├── page.tsx
+│   │   └── [id]/
+│   │       └── CustomerDetailContent.tsx.tsx
+│   │       └── error.tsx
+│   │       └── loading.tsx
+│   │       └── not-found.tsx
+│   │       └── page.tsx
+│   │── subscriptions/
+│   │   ├── page.tsx
+│   │   └── [id]/
+│   │       └── subscriptionsDetailContent.tsx.tsx
+│   │       └── error.tsx
+│   │       └── loading.tsx
+│   │       └── not-found.tsx
+│   │       └── page.tsx
+├── components/
+│   ├── layout/
+│   │   ├── DashboardHeader.tsx
+│   │   └── Sidebar.tsx
+│   │
+│   ├── dashboard/
+│   │   ├── MetricCard.tsx
+│   │   ├── RevenueChart.tsx
+│   │   ├── ActiveCustomers.tsx
+│   │   └── RecentCustomers.tsx
+│   │
+│   ├── customers/
+│   │   ├── CustomerTable.tsx
+│   │   ├── CustomerFilters.tsx
+│   │   └── Pagination.tsx
+│   │
+│   ├── common/
+│   │   └── DataState.tsx
+│   │
+│   └── ui/
+│       ├── BackButton.tsx
+│       └── Button.tsx
+├── data/
+│   ├── customers.ts
+│   ├── dashboardMetrics.ts
+│   └── subscriptionData.ts
+├── types/
+│   ├── customer.ts
+│   └── activity.ts
+├── tests/
+├── public/
+├── README.md
+└── package.json
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Rendering Choices
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Next.js App Router: Used for page routing and layouts.
 
-## Deploy on Vercel
+Client Components: Used for interactive features such as sidebar toggling, table filtering, and sorting.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Reusable Components: Shared components such as DataState are used to handle loading, empty, error, and not-found UI consistently.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Caching Strategy
+
+The application uses local mock data, so no API caching or revalidation strategy is required.
+
+## Assumptions
+
+Customer and subscription data are provided through local mock data.
+
+The dashboard is intended to demonstrate customer analytics and subscription management UI.
+
+Loading, empty, error, and not-found states are included for a consistent user experience.
+
+## Unknowns and Limitations
+
+No backend or API integration is implemented.
+
+Data is static and does not update dynamically.
+
+Authentication and authorization are not implemented.

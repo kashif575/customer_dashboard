@@ -5,7 +5,7 @@ import { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { InputText } from "primereact/inputtext";
-
+import DataState from "@/components/common/DataState";
 import { subscriptionsData } from "@/data/subscriptionsData";
 import type { Subscription } from "@/types/subscription";
 
@@ -60,7 +60,7 @@ export default function SubscriptionsPage() {
   return (
     <main className="page-content">
       <Link href="/" className="back-link">
-        ← Back to Dashboard
+        ←
       </Link>
 
       <div className="page-header">
@@ -69,82 +69,91 @@ export default function SubscriptionsPage() {
           <p>Manage subscription plans and billing details.</p>
         </div>
       </div>
+      {subscriptionsData.length === 0 ? (
+        <DataState
+          type="empty"
+          title="No customers yet"
+          message="There are no customer records available yet."
+        />
+      ) : (
+        <>
+          <div className="stats-grid">
+            <div className="stat-card">
+              <h3>Total Subscriptions</h3>
+              <p>{subscriptionsData.length}</p>
+            </div>
 
-      <div className="stats-grid">
-        <div className="stat-card">
-          <h3>Total Subscriptions</h3>
-          <p>{subscriptionsData.length}</p>
-        </div>
+            <div className="stat-card">
+              <h3>Active</h3>
+              <p>
+                {
+                  subscriptionsData.filter(
+                    (subscription) => subscription.status === "Active",
+                  ).length
+                }
+              </p>
+            </div>
 
-        <div className="stat-card">
-          <h3>Active</h3>
-          <p>
-            {
-              subscriptionsData.filter(
-                (subscription) => subscription.status === "Active",
-              ).length
-            }
-          </p>
-        </div>
+            <div className="stat-card">
+              <h3>Cancelled</h3>
+              <p>
+                {
+                  subscriptionsData.filter(
+                    (subscription) => subscription.status === "Cancelled",
+                  ).length
+                }
+              </p>
+            </div>
+          </div>
 
-        <div className="stat-card">
-          <h3>Cancelled</h3>
-          <p>
-            {
-              subscriptionsData.filter(
-                (subscription) => subscription.status === "Cancelled",
-              ).length
-            }
-          </p>
-        </div>
-      </div>
+          <div className="table-card">
+            <div className="table-toolbar">
+              <h2>All Subscriptions</h2>
 
-      <div className="table-card">
-        <div className="table-toolbar">
-          <h2>All Subscriptions</h2>
+              <InputText
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search subscriptions..."
+              />
+            </div>
 
-          <InputText
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search subscriptions..."
-          />
-        </div>
-
-        <DataTable
-          value={filteredSubscriptions}
-          dataKey="id"
-          paginator
-          rows={10}
-          rowsPerPageOptions={[5, 10, 25]}
-          emptyMessage="No subscriptions found."
-          stripedRows
-          responsiveLayout="scroll"
-        >
-          <Column field="id" header="Subscription ID" sortable />
-          <Column field="customerId" header="Customer ID" sortable />
-          <Column field="plan" header="Plan" sortable />
-          <Column
-            field="status"
-            header="Status"
-            body={statusBodyTemplate}
-            sortable
-          />
-          <Column field="billingCycle" header="Billing Cycle" sortable />
-          <Column
-            field="price"
-            header="Price"
-            body={priceBodyTemplate}
-            sortable
-          />
-          <Column
-            field="startDate"
-            header="Start Date"
-            body={dateBodyTemplate}
-            sortable
-          />
-          <Column header="Action" body={actionBodyTemplate} />
-        </DataTable>
-      </div>
+            <DataTable
+              value={filteredSubscriptions}
+              dataKey="id"
+              paginator
+              rows={10}
+              rowsPerPageOptions={[5, 10, 25]}
+              emptyMessage="No subscriptions found."
+              stripedRows
+              responsiveLayout="scroll"
+            >
+              <Column field="id" header="Subscription ID" sortable />
+              <Column field="customerId" header="Customer ID" sortable />
+              <Column field="plan" header="Plan" sortable />
+              <Column
+                field="status"
+                header="Status"
+                body={statusBodyTemplate}
+                sortable
+              />
+              <Column field="billingCycle" header="Billing Cycle" sortable />
+              <Column
+                field="price"
+                header="Price"
+                body={priceBodyTemplate}
+                sortable
+              />
+              <Column
+                field="startDate"
+                header="Start Date"
+                body={dateBodyTemplate}
+                sortable
+              />
+              <Column header="Action" body={actionBodyTemplate} />
+            </DataTable>
+          </div>
+        </>
+      )}
     </main>
   );
 }

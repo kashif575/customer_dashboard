@@ -1,18 +1,14 @@
 "use client";
 
-import { useState } from "react";
 import {
-  Activity,
-  BarChart3,
   Building2,
   CreditCard,
   LayoutDashboard,
   Menu,
-  Settings,
   Users,
   X,
 } from "lucide-react";
-import type { Dispatch, SetStateAction } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 import { Button } from "../ui/Button";
 import Link from "next/link";
 
@@ -27,8 +23,6 @@ const navigation = [
   { label: "Overview", href: "/", icon: LayoutDashboard },
   { label: "Customers", href: "/customers", icon: Users },
   { label: "Subscriptions", href: "/subscriptions", icon: CreditCard },
-  { label: "Analytics", href: "/analytics", icon: BarChart3 },
-  { label: "Invoice", href: "/invoice", icon: Activity },
 ];
 
 export default function Sidebar({
@@ -37,6 +31,16 @@ export default function Sidebar({
   collapsed,
   setCollapsed,
 }: SidebarProps) {
+  useEffect(() => {
+    const handleResize = () => {
+      setCollapsed(window.innerWidth <= 786);
+    };
+
+    handleResize(); // Check initial width
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [setCollapsed]);
   return (
     <>
       <Button
@@ -69,7 +73,6 @@ export default function Sidebar({
           {!collapsed && (
             <div className="brand-copy">
               <span className="brand-name">MetricFlow</span>
-              {/* <span className="brand-subtitle">CUSTOMER SUCCESS</span> */}
             </div>
           )}
 
@@ -100,15 +103,6 @@ export default function Sidebar({
             </Link>
           ))}
         </nav>
-
-        <div className="sidebar-bottom">
-          {!collapsed && <p className="nav-section-label">PREFERENCES</p>}
-
-          <Link href="#settings" className="nav-link">
-            <Settings size={19} />
-            {!collapsed && <span>Settings</span>}
-          </Link>
-        </div>
       </aside>
     </>
   );

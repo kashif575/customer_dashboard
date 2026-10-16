@@ -1,22 +1,18 @@
 "use client";
 import Link from "next/link";
-import { useParams, notFound } from "next/navigation";
-import { customersData } from "@/data/customers";
+import type { Customer } from "@/types/customer";
 
-export default function CustomerDetailContent() {
-  const params = useParams<{ id: string }>();
-  const id = params.id;
+type CustomerDetailContentProps = {
+  customer: Customer;
+};
 
-  const customer = customersData.find((item) => item.id === id);
-
-  if (!customer) {
-    notFound();
-  }
-
+export default function CustomerDetailContent({
+  customer,
+}: CustomerDetailContentProps) {
   return (
     <div className="customer-detail-page">
       <Link href="/customers" className="customer-detail-back-link">
-        ← Back
+        ←
       </Link>
 
       <div className="customer-detail-header">

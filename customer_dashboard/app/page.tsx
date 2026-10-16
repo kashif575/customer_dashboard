@@ -1,20 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../components/Layout/Sidebar";
 import DashboardHeader from "../components/Layout/DashboardHeader";
 import { Info, ArrowUp } from "lucide-react";
 import RevenueChart from "../components/dashboard/RevenueChart";
 import MetricCard from "../components/dashboard/MatricCard";
 import { dashboardMetrics } from "@/data/dashboardMetrics";
-import Link from "next/link";
-import Image from "next/image";
-import User from "../public/user.jpg";
 import ActiveCustomers from "@/components/dashboard/ActiveCustomers";
 
 export default function DashboardPage() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 786px)");
+
+    const handleResize = () => {
+      setMobileOpen(mediaQuery.matches);
+    };
+
+    handleResize();
+
+    mediaQuery.addEventListener("change", handleResize);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleResize);
+    };
+  }, [setMobileOpen]);
 
   return (
     <div className={`app-shell ${sidebarCollapsed ? "sidebar-collapsed" : ""}`}>

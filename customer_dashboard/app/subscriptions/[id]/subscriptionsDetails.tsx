@@ -1,26 +1,13 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
+"use client";
 
-import { subscriptionsData } from "@/data/subscriptionsData";
+import Link from "next/link";
 import type { Subscription } from "@/types/subscription";
 
-type SubscriptionDetailPageProps = {
-  params: Promise<{ id: string }>;
+type Props = {
+  subscription: Subscription;
 };
 
-export default async function SubscriptionDetailPage({
-  params,
-}: SubscriptionDetailPageProps) {
-  const { id } = await params;
-
-  const subscription: Subscription | undefined = subscriptionsData.find(
-    (item) => item.id === id,
-  );
-
-  if (!subscription) {
-    notFound();
-  }
-
+export default function SubscriptionDetailPage({ subscription }: Props) {
   const formatDate = (date: string | null) => {
     if (!date) return "Not scheduled";
 
@@ -32,11 +19,10 @@ export default async function SubscriptionDetailPage({
   };
 
   const statusClass = subscription.status.toLowerCase().replace(/\s+/g, "-");
-
   return (
     <main className="page-content">
       <Link href="/subscriptions" className="back-link">
-        ← Back to Subscriptions
+        ←
       </Link>
 
       <div className="page-header">
